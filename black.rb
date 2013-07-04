@@ -1,17 +1,58 @@
-J = 10
-Q = 10
-K = 10
 h = "hearts"
 c = "clubs"
 s = "spades"
 d = "diamonds"
+J = 10
+Q = 10
+K = 10
 
-deck = [[h,1,0], [h,2,0], [h,3,0], [h,4,0], [h,5,0], [h,6,0], [h,7,0], [h,8,0], [h,9,0], [h,10,0], [h,J,0], [h,Q,0], [h,K,0],  
-[c,1,0], [c,2,0], [c,3,0], [c,4,0], [c,5,0], [c,6,0], [c,7,0], [c,8,0], [c,9,0], [c,10,0], [c,J,0], [c,Q,0], [c,K,0],
-[s,1,0], [s,2,0], [s,3,0], [s,4,0], [s,5,0], [s,6,0], [s,7,0], [s,8,0], [s,9,0], [s,10,0], [s,J,0], [s,Q,0], [s,K,0],
-[d,1,0], [d,2,0], [d,3,0], [d,4,0], [d,5,0], [d,6,0], [d,7,0], [d,8,0], [d,9,0], [d,10,0], [d,J,0], [d,Q,0], [d,K,0]]
+deck = [[h, 'A'], [h,2], [h,3], [h,4], [h,5], [h,6], [h,7], [h,8], [h,9], [h,10], [h, J], [h,Q], [h,K],  
+[c, 'A'], [c,2], [c,3], [c,4], [c,5], [c,6], [c,7], [c,8], [c,9], [c,10], [c, J], [c,Q], [c,K],
+[s, 'A'], [s,2], [s,3], [s,4], [s,5], [s,6], [s,7], [s,8], [s,9], [s,10], [s, J], [s,Q], [s,K],
+[d, 'A'], [d,2], [d,3], [d,4], [d,5], [d,6], [d,7], [d,8], [d,9], [d,10], [d, J], [d,Q], [d,K]]
 
+player =[]
+casa = []
 
+def repartir deck, player
+	a = rand(deck.length)
+ 	card = deck[a]
+ 	deck.delete_at(a)
+ 	player << card
+ 	return player
+end
 
-card = deck[rand(deck.length)]
-print card
+def total player
+ 	b = 0
+ 	@total = 0
+ 	while b <= player.length-1
+ 			if player[b][1] == 'A'
+ 				@total =  @total + 11
+ 			else
+ 				@total =  @total + player[b][1]
+ 			end
+ 			b = b + 1
+
+ 	end
+ 	return @total
+ end
+
+def mostrar player, casa
+	 total player
+	 puts "Jugador: #{player} Total = #{@total}"
+	 puts '-------------------------------------------------'
+	 puts "Casa: #{casa[0]}, *"
+end
+ 
+# Primeras dos cartas
+repartir deck, player
+repartir deck, casa
+repartir deck, player
+repartir deck, casa
+
+# Mostrar mano
+puts 'Inicia el juego'
+puts '---------------'
+mostrar player, casa
+puts "Tu total es de: #{@total}, sacas otra carta o te quedas?"
+op = gets.chomp
