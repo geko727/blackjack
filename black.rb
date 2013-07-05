@@ -42,9 +42,9 @@ end
 
 def mostrar player, casa
 	 total player
-	 puts "Jugador: #{player} Total = #{@total}"
+	 puts "Player: #{player} Total = #{@total}"
 	 puts '-------------------------------------------------'
-	 puts "Casa: #{casa[0]}, *"
+	 puts "Croupier: #{casa[0]}, *"
 end
  
 def tcasa casa, deck
@@ -57,28 +57,28 @@ def tcasa casa, deck
 end
 
 def juego casa, deck, player, op, totplay
-	if op == 'stay'
+	if op == 'stand'
 		tcasa casa, deck
-		puts "Casa: #{casa}, el total de la casa es de: #{@total}"
+		puts "Croupier: #{casa}, Total amount of points: #{@total}"
 		totcas = @total
 		if totcas > 21 
-			puts "Tu ganas, la casa rebaso el limite de 21"
+			puts "You win!!!, Croupier's cards exceed 21"
 		elsif totcas <= 21 && totcas > totplay
-			puts "La casa gana"
+			puts "Croupier wins"
 		elsif totcas <= 21 && totcas < totplay
-	        puts "Tu ganas, tus cartas son mayores a las de la casa"
+	        puts "You win!!!, your cards are closer to 21 than the croupier's cards"
 		elsif totcas <= 21 && totcas == totplay
-	        puts "empate"
+	        puts "You and croupier have the same number of points"
 	    end
 	elsif op == 'hit'
 		repartir deck, player
 		mostrar player, casa
 		if @total > 21
-			puts "Tu total es de: #{@total}, pierdes por pasar el limite de 21"
+			puts "Total amount of points: #{@total}, You lose, your cards exceed 21"
 		elsif @total == 21
-			puts "Tu Ganas!!!! tu total es de 21"
+			puts "You win!!!, your total amount of points is 21"
 		else
-			puts "Tu total es de: #{@total}, sacas otra carta o te quedas? hit o stay"
+			puts "Total amount of points: #{@total}, you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
 			op = gets.chomp
 			totplay = @total
 			juego casa, deck, player, op, totplay
@@ -94,14 +94,14 @@ repartir deck, player
 repartir deck, casa
 
 # Mostrar mano
-puts 'Inicia el juego'
+puts 'Start game'
 puts '---------------'
 mostrar player, casa
 puts '-------------------------------------------------'
 if @total == 21
-			puts "Tu Ganas!!!! tu total es de 21"
+			puts "You win!!!, your total amount of points is 21"
 else
-puts "Tu total es de: #{@total}, sacas otra carta o te quedas? hit o stay"
+puts "Total amount of points: #{@total}, you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
 totplay = @total
 op = gets.chomp
 juego casa, deck, player, op, totplay
