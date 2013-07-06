@@ -104,6 +104,13 @@ else
 puts "Total amount of points: #{@total}, you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
 totplay = @total
 op = gets.chomp
+
+while op != 'stand' && op != 'hit'
+	puts "Please enter a valide option --stand or --hit"
+	op =gets.chomp
+end
+
+
 juego casa, deck, player, op, totplay
 end
 
