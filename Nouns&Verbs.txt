@@ -1,0 +1,21 @@
+Nouns
+------
+deck
+player
+dealer
+card
+suits
+value
+hand
+
+
+
+Verbs
+------
+deal
+amount of points
+show hand
+hit
+stay
+compare hands
+start game
