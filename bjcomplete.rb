@@ -42,7 +42,7 @@ end
 
 def mostrar player, casa
 	 total player
-	 puts "Player: #{player} Total = #{@total}"
+	 puts "#{$name}: #{player} Total = #{@total}"
 	 puts '-------------------------------------------------'
 	 puts "Croupier: #{casa[0]}, *"
 end
@@ -85,17 +85,28 @@ def juego casa, deck, player, op, totplay
 	    end
 	end	
 end
-
-# Primeras dos cartas
-
-repartir deck, player
-repartir deck, casa
-repartir deck, player
-repartir deck, casa
-
+def inicio deck, player, casa
 # Mostrar mano
 puts 'Start game'
 puts '---------------'
+puts 'Welcome to Blackjack game, whats your name?'
+$name = gets.chomp
+puts ''
+puts "Hi #{$name}, how many decks would you like to play?"
+d = gets.chomp
+while d == ""
+	puts "Please enter a valide number"
+	d =gets.chomp
+end
+deck = deck*d.to_i
+# Primeras dos cartas
+repartir deck, player
+repartir deck, casa
+repartir deck, player
+repartir deck, casa
+puts''
+puts "This is your hand #{$name}"
+puts ''
 mostrar player, casa
 puts '-------------------------------------------------'
 if @total == 21
@@ -104,13 +115,26 @@ else
 puts "Total amount of points: #{@total}, you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
 totplay = @total
 op = gets.chomp
-
+puts ''
 while op != 'stand' && op != 'hit'
 	puts "Please enter a valide option --stand or --hit"
 	op =gets.chomp
 end
-
-
 juego casa, deck, player, op, totplay
 end
+puts ''
+puts '-------------------------------------------------'
+puts "#{$name} would you like to play again? yes/no"
+option = gets.chomp
+while option != 'yes' && option != 'no'
+	puts "Please enter a valide option --yes or --no"
+	option =gets.chomp
+end
+if option == 'yes'
+	inicio deck, player, casa
+elsif option == 'no'
+	exit
+end
+end
 
+inicio deck, player, casa
