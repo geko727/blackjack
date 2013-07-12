@@ -1,5 +1,6 @@
 module Deal
-	attr_accessor :total
+attr_accessor :total
+
 	def add(new_card)
 		h << new_card
 	end
@@ -30,43 +31,14 @@ module Deal
  		@total
  	end
 
+ 	def tot
+ 		@total
+ 	end
+
  	def show_total
  		puts "Total amount of points: #{@total}"
  	end
-
- 	def stand_hit
- 		puts "#{name}, you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
- 		op = gets.chomp
-		puts ''
-		while op != 'stand' && op != 'hit'
-			puts "Please enter a valide option --stand or --hit"
-			op =gets.chomp
-		end
-		if op == 'stand'
-			#compare_hands(totalam(player.h), totalam(dealer.h))
-			compare_hands(player.totalam(player.h), dealer.totalam(dealer.h))
-		end
- 	end
-
- 	def compare_hands(total_player, total_dealer)
- 		attr_accessor :total_player, :total_dealer
- 		def initialize
- 			@total_player = total_player
- 			@total_dealer = total_dealer
- 		end
- 		puts "compare"
- 		if total_dealer > 21 
- 			puts "You win!!!, Croupier's cards exceed 21"
-		elsif total_dealer <= 21 && total_dealer > total_player
-			puts "Croupier wins"
-		elsif total_dealer <= 21 && total_dealer < total_player
-	        puts "You win!!!, your cards are closer to 21 than the croupier's cards"
-		elsif total_dealer <= 21 && total_dealer == total_player
-	        puts "You and croupier have the same number of points"
-	    end
- 	
- 	end
-end
+ end
 
 
 class Deck
@@ -118,30 +90,94 @@ class Dealer < Player
 	end	
 end
 
-class Card
-end
-
-
 class Game
-	def start; end
+	attr_accessor :deck, :player, :dealer
 
-	def deal; end
+	def initialize
+		@deck = Deck.new
+		@player = Player.new("Carlos")
+		@dealer = Dealer.new("Dealer")
+	end
+	def start
+		deck.create
+		player.add(deck.card)
+		player.add(deck.card)
+		player.to_s
+		player.show
+		player.totalam(player.h)
+		player.show_total
+		dealer.add(deck.card)
+		dealer.add(deck.card)
+		dealer.show
+		dealer.totalam(dealer.h)
+		dealer.show_total
+		compare_hands(dealer.tot, player.tot)
+	end
+
+	def dealdealer
+		if dealer.tot < 17
+			dealer.add(deck.card)
+			dealer.totalam(dealer.h)
+			dealdealer
+		end
+		dealer.tot
+	end
+
+	def again
+		player.add(deck.card)
+		player.show
+		player.totalam(player.h)
+		player.show_total
+		dealer.show
+		dealer.totalam(dealer.h)
+		dealer.show_total
+		if player.tot > 21
+			puts "You lose, your cards exceed 21"
+		#elsif player.tot == 21
+		#	puts "You win!!!, your total amount of points is 21"
+		else
+		compare_hands(dealer.tot, player.tot)
+		end
+	end
+
+	def compare_hands(total_dealer, total_player)
+		def initialize
+			@total_dealer = total_dealer
+			@total_player = total_player
+		end
+ 		puts "#{player.name} you may decide to stand (draw no more cards) or hit (draw more cards)? stand or hit"
+ 		op = gets.chomp
+		puts ''
+		while op != 'stand' && op != 'hit'
+			puts "Please enter a valide option --stand or --hit"
+			op =gets.chomp
+		end
+		if op == 'stand'
+			dealdealer
+			player.show
+			player.show_total
+			dealer.show
+			dealer.show_total 
+			total_dealer = dealer.tot
+	 		if total_dealer > 21 
+	 			puts "You win!!!, Dealer's cards exceed 21"
+			elsif total_dealer <= 21 && total_dealer > total_player
+				puts "You lose, Dealer cards are closer to 21 than yours"
+			elsif total_dealer <= 21 && total_dealer < total_player
+		        puts "You win!!!, your cards are closer to 21 than the Dealer's cards"
+			elsif total_dealer <= 21 && total_dealer == total_player
+		        puts "You and croupier have the same number of points"
+		    end
+		end
+		if op == 'hit'
+			again
+		end
+	end
+
+	def play_again
 end
 
 
-deck = Deck.new
-deck.create
-player = Player.new("Carlos")
-dealer = Dealer.new("Dealer")
-player.add(deck.card)
-player.add(deck.card)
-player.to_s
-player.show
-player.totalam(player.h)
-player.show_total
-dealer.add(deck.card)
-dealer.add(deck.card)
-dealer.show
-dealer.totalam(dealer.h)
-dealer.show_total
-player.stand_hit
+game = Game.new
+game.start
+game.play_again
